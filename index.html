@@ -3,208 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel de Monitoramento da Equipe</title>
+<title>livGo | Sua equipe à vista</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --tinta:#0F1B33; --azul:#2F5BEA; --fundo:#E9EEF5; --painel:#fff; --trilho:#DCE3EE; --suave:#5B6780;
-  --online:#12A36B; --pausa:#F0A81A; --offline:#D9485B;
+  --floresta:#0B3D2E; --verde:#12A36B; --botao:#0C7A51; --menta:#DFF5EA; --claro:#F4FBF7;
+  --suave:#4E6B5F; --linha:#CFE6DA;
   --titulo:"Bricolage Grotesque",Georgia,serif; --texto:"Figtree",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
-body{font-family:var(--texto);background:var(--fundo);color:var(--tinta);line-height:1.5;padding-bottom:40px}
-.topo{background:var(--tinta);color:#fff;padding:28px 20px 56px}
-.topo-in,main{max-width:960px;margin:0 auto}
-.topo-in{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-h1{font-family:var(--titulo);font-weight:800;font-size:clamp(2rem,7vw,3.4rem);line-height:1.02;letter-spacing:-.02em}
-.topo p{color:#AFC0E6;margin-top:8px}
-.relogio{text-align:right}
-.relogio b{font-family:var(--titulo);font-size:2rem;display:block;line-height:1}
-.relogio span{color:#AFC0E6;font-size:.85rem}
-main{padding:0 16px;margin-top:-32px}
-.painel{background:var(--painel);border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(15,27,51,.08)}
-h2{font-family:var(--titulo);font-size:1.25rem;margin-bottom:4px}
-.sub{color:var(--suave);font-size:.9rem;margin-bottom:16px}
+html{scroll-behavior:smooth}
+body{font-family:var(--texto);color:var(--floresta);background:#fff;line-height:1.55}
+.miolo{max-width:1000px;margin:0 auto;padding:0 20px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--floresta);outline-offset:3px}
 
-/* Linha do dia */
-.eixo{display:flex;justify-content:space-between;color:var(--suave);font-size:.78rem;margin:0 0 6px 0}
-.linha{display:grid;grid-template-columns:1fr;gap:2px;margin-bottom:12px}
-.linha .n{font-weight:600;font-size:.9rem}
-.trilho{display:flex;height:22px;border-radius:11px;overflow:hidden;background:var(--trilho);position:relative}
-.trilho i{display:block;height:100%}
-.trilho::after{content:"";position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--tinta)}
-i.online{background:var(--online)} i.pausa{background:var(--pausa)} i.offline{background:var(--offline)}
-.legenda{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--suave);margin-top:14px}
-.legenda span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:var(--c)}
+/* Topo */
+.topo{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font-family:var(--titulo);font-weight:800;font-size:1.9rem;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.logo span{color:var(--verde)}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--verde);animation:pulso 2s infinite}
+@keyframes pulso{50%{box-shadow:0 0 0 7px rgba(18,163,107,.22)}}
+.topo a.link{color:var(--floresta);font-weight:600;text-decoration:none;border:2px solid var(--linha);padding:8px 18px;border-radius:999px}
 
-/* Filtros */
-.ferramentas{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
-.filtro{border:2px solid var(--trilho);background:#fff;color:var(--tinta);font:600 .9rem var(--texto);padding:8px 14px;border-radius:999px;cursor:pointer}
-.filtro[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#fff}
-.filtro b{margin-left:6px;font-family:var(--titulo)}
-input[type=search]{flex:1;min-width:150px;border:2px solid var(--trilho);border-radius:999px;padding:8px 16px;font:400 .95rem var(--texto)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+/* Hero */
+.hero{display:grid;gap:36px;padding:28px 0 56px;position:relative}
+.hero::before{content:"";position:absolute;z-index:-1;width:520px;height:520px;border-radius:50%;background:var(--menta);right:-180px;top:-60px}
+h1{font-family:var(--titulo);font-weight:800;font-size:clamp(2.4rem,9vw,4.2rem);line-height:1;letter-spacing:-.03em}
+.lead{color:var(--suave);font-size:1.1rem;margin:16px 0 26px;max-width:36ch}
+.botao{display:inline-block;background:var(--botao);color:#fff;font:600 1rem var(--texto);padding:14px 26px;border-radius:14px;text-decoration:none;border:0;cursor:pointer}
 
-/* Lista */
-.func{border-top:1px solid var(--trilho)}
-.func:first-child{border-top:0}
-.func>button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:14px 4px}
-.func>button:focus-visible{outline:3px solid var(--azul);border-radius:10px}
-.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font:800 1rem var(--titulo);color:#fff;background:var(--azul);position:relative}
-.avatar::after{content:"";position:absolute;right:-1px;bottom:-1px;width:14px;height:14px;border-radius:50%;border:3px solid #fff;background:var(--c)}
-.online .avatar::after{animation:pulso 2s infinite}
-@keyframes pulso{50%{box-shadow:0 0 0 5px rgba(18,163,107,.25)}}
-.nome{font-weight:600}.cargo,.visto{color:var(--suave);font-size:.88rem}
-.selo{display:inline-block;padding:3px 12px;border-radius:999px;font-size:.8rem;font-weight:600;white-space:nowrap}
-.selo.online{background:#D6F3E6;color:#0B6B47}.selo.pausa{background:#FCEBC2;color:#7A5200}.selo.offline{background:#FADADF;color:#8E2233}
-.direita{text-align:right}
-.detalhe{display:none;padding:0 4px 16px 64px;font-size:.9rem}
-.func.aberto .detalhe{display:block}
-.barra{height:10px;background:var(--trilho);border-radius:5px;overflow:hidden;margin:6px 0 10px}
-.barra i{display:block;height:100%;background:var(--azul);border-radius:5px}
-.vazio{color:var(--suave);padding:20px 4px}
-.acoes button{border:0;background:var(--azul);color:#fff;font:600 .95rem var(--texto);padding:10px 18px;border-radius:12px;cursor:pointer}
-.acoes p{color:var(--suave);font-size:.85rem;margin-top:8px}
-@media (prefers-reduced-motion:reduce){.online .avatar::after{animation:none}}
+/* Prévia */
+.previa{background:#fff;border:2px solid var(--linha);border-radius:22px;padding:22px;box-shadow:0 18px 40px rgba(11,61,46,.12);max-width:420px}
+.previa h2{font-family:var(--titulo);font-size:1.15rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.previa h2 i{width:10px;height:10px;border-radius:50%;background:var(--verde);animation:pulso 2s infinite}
+.p{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;margin-bottom:14px}
+.p:last-child{margin-bottom:0}
+.av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:800 .9rem var(--titulo);background:var(--menta);color:var(--botao)}
+.p b{font-weight:600}.p small{color:var(--suave);float:right;font-size:.82rem}
+.b{height:8px;border-radius:4px;background:var(--menta);margin-top:6px;overflow:hidden}
+.b i{display:block;height:100%;width:var(--w);background:var(--verde);border-radius:4px;animation:encher 1.4s .3s both cubic-bezier(.2,.8,.2,1)}
+.b.of i{background:#B9C7C0}.b.pa i{background:#7FD3AE}
+@keyframes encher{from{width:0}}
+
+/* Recursos */
+.recursos{padding:16px 0 56px}
+.recursos h2{font-family:var(--titulo);font-size:clamp(1.5rem,5vw,2.2rem);letter-spacing:-.02em;margin-bottom:22px}
+.lista{display:grid;gap:20px}
+.lista div{border-left:4px solid var(--verde);padding-left:16px}
+.lista h3{font-family:var(--titulo);font-size:1.15rem}
+.lista p{color:var(--suave);font-size:.95rem;max-width:44ch}
+
+/* Entrar */
+.entrar{background:var(--menta);padding:56px 0}
+.entrar .miolo{display:grid;gap:28px}
+.entrar h2{font-family:var(--titulo);font-size:clamp(1.6rem,5vw,2.4rem);letter-spacing:-.02em;line-height:1.1}
+.entrar .miolo>div>p{color:var(--suave);margin-top:10px;max-width:34ch}
+.cartao{background:#fff;border-radius:20px;padding:26px 22px;box-shadow:0 14px 34px rgba(11,61,46,.12);max-width:440px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+input{width:100%;border:2px solid var(--linha);border-radius:12px;padding:12px 14px;font:400 1rem var(--texto);margin-bottom:16px;color:var(--floresta)}
+.cartao .botao{width:100%}
+.erro{color:#A32035;font-size:.88rem;min-height:1.3em;margin:-6px 0 10px}
+.aviso{font-size:.8rem;color:var(--suave);margin-top:14px}
+
+footer{background:var(--floresta);color:#B7D8C8;padding:26px 0;font-size:.9rem}
+
+@media (min-width:820px){
+  .hero{grid-template-columns:1.1fr 1fr;align-items:center;gap:56px;padding-top:56px}
+  .lista{grid-template-columns:repeat(3,1fr);gap:28px}
+  .entrar .miolo{grid-template-columns:1fr 1fr;align-items:center;gap:56px}
+}
+@media (prefers-reduced-motion:reduce){.logo i,.previa h2 i{animation:none}.b i{animation:none}}
 </style>
 </head>
 <body>
 
-<header class="topo">
-  <div class="topo-in">
+<div class="miolo">
+  <header class="topo">
+    <div class="logo">liv<span>Go</span><i aria-hidden="true"></i></div>
+    <a class="link" href="#entrar">Entrar</a>
+  </header>
+
+  <section class="hero">
     <div>
-      <h1>Painel de Monitoramento<br>da Equipe</h1>
-      <p>Quem está trabalhando agora e como foi o dia de cada pessoa.</p>
+      <h1>Sua equipe à vista, sem perder tempo.</h1>
+      <p class="lead">Veja quem está online, quem está em pausa e como foi o dia de cada pessoa, tudo em uma tela só.</p>
+      <a class="botao" href="#entrar">Entrar no painel</a>
     </div>
-    <div class="relogio"><b id="hora">--:--:--</b><span id="data"></span></div>
+
+    <div class="previa" aria-label="Exemplo do painel">
+      <h2><i aria-hidden="true"></i>Agora na equipe</h2>
+      <div class="p"><span class="av">AS</span><div><b>Ana Silva</b><small>Online</small><div class="b"><i style="--w:82%"></i></div></div></div>
+      <div class="p"><span class="av">MC</span><div><b>Mariana Costa</b><small>Online</small><div class="b"><i style="--w:100%"></i></div></div></div>
+      <div class="p"><span class="av">CE</span><div><b>Carlos Eduardo</b><small>Em pausa</small><div class="b pa"><i style="--w:48%"></i></div></div></div>
+      <div class="p"><span class="av">RL</span><div><b>Roberto Lima</b><small>Offline</small><div class="b of"><i style="--w:30%"></i></div></div></div>
+    </div>
+  </section>
+
+  <section class="recursos" aria-labelledby="t-rec">
+    <h2 id="t-rec">O que você acompanha no livGo</h2>
+    <div class="lista">
+      <div><h3>Quem está online</h3><p>O status de cada pessoa muda na hora e mostra há quanto tempo ela fez a última atividade.</p></div>
+      <div><h3>Linha do dia</h3><p>Uma barra com as últimas 8 horas de cada pessoa, para entender o ritmo do dia de relance.</p></div>
+      <div><h3>Metas do dia</h3><p>Tarefas concluídas em relação à meta, com o resumo de tempo online e em pausa.</p></div>
+    </div>
+  </section>
+</div>
+
+<section class="entrar" id="entrar">
+  <div class="miolo">
+    <div>
+      <h2>Entre e veja o painel da sua equipe</h2>
+      <p>Use o e-mail da sua empresa para acessar.</p>
+    </div>
+    <div class="cartao">
+      <form id="form" novalidate>
+        <label for="email">E-mail</label>
+        <input id="email" type="email" autocomplete="email" placeholder="voce@empresa.com">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" autocomplete="current-password">
+        <div class="erro" id="erro" role="alert"></div>
+        <button class="botao" type="submit">Entrar</button>
+      </form>
+      <p class="aviso">Versão de demonstração: qualquer e-mail e senha preenchidos entram.</p>
+    </div>
   </div>
-</header>
+</section>
 
-<main>
-  <section class="painel" aria-labelledby="t-linha">
-    <h2 id="t-linha">Linha do dia</h2>
-    <p class="sub">As últimas 8 horas de cada pessoa. A barra escura no fim marca o momento atual.</p>
-    <div class="eixo" aria-hidden="true"><span>Há 8h</span><span>Há 4h</span><span>Agora</span></div>
-    <div id="linhas"></div>
-    <div class="legenda">
-      <span style="--c:var(--online)">Online</span>
-      <span style="--c:var(--pausa)">Em pausa</span>
-      <span style="--c:var(--offline)">Offline</span>
-    </div>
-  </section>
-
-  <section class="painel" aria-labelledby="t-equipe">
-    <h2 id="t-equipe">Equipe</h2>
-    <p class="sub">Toque em uma pessoa para ver os detalhes do dia.</p>
-    <div class="ferramentas" id="filtros"></div>
-    <div class="ferramentas"><input type="search" id="busca" placeholder="Buscar por nome ou cargo" aria-label="Buscar funcionário"></div>
-    <div id="lista"></div>
-  </section>
-
-  <section class="painel acoes">
-    <button id="simular">Simular mudança de status</button>
-    <p>Sorteia uma pessoa e troca o status dela, para você ver o painel reagir em tempo real.</p>
-  </section>
-</main>
+<footer>
+  <div class="miolo">livGo © 2026. Monitoramento de equipe com clareza.</div>
+</footer>
 
 <script>
-const ROTULO = { online: "Online", pausa: "Em pausa", offline: "Offline" };
-const JANELA = 480; // minutos exibidos na linha do dia (8h)
-const min = m => Date.now() - m * 60000;
-
-// Para adicionar alguém, copie um bloco abaixo e mude os dados.
-// "seg" = trechos do dia, do mais antigo ao mais recente (em minutos). A soma deve dar 480.
-const equipe = [
-  { nome: "Ana Silva", cargo: "Consultora de Vendas", status: "online", visto: min(2), atividade: "Atendimento", feitas: 6, meta: 8,
-    seg: [["online",180],["pausa",60],["online",240]] },
-  { nome: "Carlos Eduardo", cargo: "Atendimento ao Cliente", status: "pausa", visto: min(15), atividade: "Almoço", feitas: 4, meta: 10,
-    seg: [["online",200],["pausa",40],["online",225],["pausa",15]] },
-  { nome: "Mariana Costa", cargo: "Analista de Contratos", status: "online", visto: min(0), atividade: "Revisão de contrato", feitas: 7, meta: 7,
-    seg: [["offline",60],["online",420]] },
-  { nome: "Roberto Lima", cargo: "Suporte Técnico", status: "offline", visto: min(120), atividade: "Saiu do sistema", feitas: 3, meta: 9,
-    seg: [["online",240],["pausa",60],["online",60],["offline",120]] }
-];
-
-let filtro = "todos", busca = "";
-const abertos = new Set();
-
-function tempo(ts) {
-  const m = Math.floor((Date.now() - ts) / 60000);
-  if (m < 1) return "Agora mesmo";
-  if (m < 60) return `Há ${m} min`;
-  const h = Math.floor(m / 60);
-  return `Há ${h} ${h > 1 ? "horas" : "hora"}`;
-}
-const iniciais = n => n.split(" ").map(p => p[0]).slice(0, 2).join("");
-const total = (e, s) => e.seg.filter(x => x[0] === s).reduce((a, x) => a + x[1], 0);
-const horas = m => `${Math.floor(m / 60)}h${String(m % 60).padStart(2, "0")}`;
-
-function desenhar() {
-  // Filtros com contagem
-  const cont = s => equipe.filter(e => e.status === s).length;
-  const botoes = [["todos", "Todos", equipe.length], ["online", "Online", cont("online")], ["pausa", "Em pausa", cont("pausa")], ["offline", "Offline", cont("offline")]];
-  document.getElementById("filtros").innerHTML = botoes.map(([k, r, n]) =>
-    `<button class="filtro" data-f="${k}" aria-pressed="${filtro === k}">${r}<b>${n}</b></button>`).join("");
-
-  // Linha do dia
-  document.getElementById("linhas").innerHTML = equipe.map(e => `
-    <div class="linha"><span class="n">${e.nome}</span>
-      <div class="trilho" role="img" aria-label="${e.nome}: ${horas(total(e,"online"))} online, ${horas(total(e,"pausa"))} em pausa, ${horas(total(e,"offline"))} offline">
-        ${e.seg.map(([s, d]) => `<i class="${s}" style="width:${d / JANELA * 100}%"></i>`).join("")}
-      </div></div>`).join("");
-
-  // Lista
-  const q = busca.trim().toLowerCase();
-  const vis = equipe.filter(e => (filtro === "todos" || e.status === filtro) && (e.nome + " " + e.cargo).toLowerCase().includes(q));
-  document.getElementById("lista").innerHTML = vis.length ? vis.map(e => {
-    const pct = Math.round(e.feitas / e.meta * 100);
-    return `<div class="func ${e.status} ${abertos.has(e.nome) ? "aberto" : ""}" style="--c:var(--${e.status})">
-      <button data-n="${e.nome}" aria-expanded="${abertos.has(e.nome)}">
-        <span class="avatar">${iniciais(e.nome)}</span>
-        <span><span class="nome">${e.nome}</span><br><span class="cargo">${e.cargo}</span></span>
-        <span class="direita"><span class="selo ${e.status}">${ROTULO[e.status]}</span><br><span class="visto">${tempo(e.visto)}</span></span>
-      </button>
-      <div class="detalhe">
-        <div>${e.atividade}</div>
-        <div class="barra" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
-        <div>${e.feitas} de ${e.meta} tarefas concluídas (${pct}%)</div>
-        <div class="cargo">Nas últimas 8h: ${horas(total(e,"online"))} online, ${horas(total(e,"pausa"))} em pausa, ${horas(total(e,"offline"))} offline</div>
-      </div></div>`;
-  }).join("") : `<p class="vazio">Ninguém encontrado. Tente outro filtro ou outra busca.</p>`;
-}
-
-// Interações
-document.addEventListener("click", ev => {
-  const f = ev.target.closest("[data-f]"); if (f) { filtro = f.dataset.f; desenhar(); return; }
-  const b = ev.target.closest("[data-n]");
-  if (b) { const n = b.dataset.n; abertos.has(n) ? abertos.delete(n) : abertos.add(n); desenhar(); const novo = document.querySelector(`[data-n="${n}"]`); if (novo) novo.focus(); }
+document.getElementById("form").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const erro = document.getElementById("erro");
+  if (!email.includes("@")) { erro.textContent = "Digite um e-mail válido, como voce@empresa.com."; return; }
+  if (senha.length < 1) { erro.textContent = "Digite sua senha."; return; }
+  window.location.href = "painel.html";
 });
-document.getElementById("busca").addEventListener("input", ev => { busca = ev.target.value; desenhar(); });
-
-// Simulação: troca o status de uma pessoa e empurra a linha do dia 20 min para a esquerda
-const ATIV = { online: "Retomou o trabalho", pausa: "Iniciou uma pausa", offline: "Saiu do sistema" };
-document.getElementById("simular").addEventListener("click", () => {
-  const e = equipe[Math.floor(Math.random() * equipe.length)];
-  const outros = Object.keys(ROTULO).filter(s => s !== e.status);
-  const novo = outros[Math.floor(Math.random() * outros.length)];
-  let corte = 20;
-  while (corte > 0) { const s = e.seg[0]; if (s[1] <= corte) { corte -= s[1]; e.seg.shift(); } else { s[1] -= corte; corte = 0; } }
-  e.seg.push([novo, 20]);
-  e.status = novo; e.visto = Date.now(); e.atividade = ATIV[novo];
-  desenhar();
-});
-
-// Relógio e atualização dos "Há X min"
-function relogio() {
-  const d = new Date();
-  document.getElementById("hora").textContent = d.toLocaleTimeString("pt-BR");
-  document.getElementById("data").textContent = d.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
-}
-relogio(); setInterval(relogio, 1000);
-setInterval(desenhar, 30000);
-desenhar();
 </script>
 </body>
 </html>
