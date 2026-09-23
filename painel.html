@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>livGo | Entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#0F1B33; --azul:#2F5BEA; --fundo:#E9EEF5; --trilho:#DCE3EE; --suave:#5B6780;
+  --online:#12A36B; --pausa:#F0A81A; --offline:#D9485B;
+  --titulo:"Bricolage Grotesque",Georgia,serif; --texto:"Figtree",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--texto);background:var(--tinta);color:#fff;min-height:100vh;line-height:1.5}
+.pagina{max-width:1000px;margin:0 auto;padding:28px 20px 40px;display:grid;gap:36px}
+.logo{font-family:var(--titulo);font-weight:800;font-size:2rem;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.logo span{color:#7FA0FF}
+.logo i{width:12px;height:12px;border-radius:50%;background:var(--online);animation:pulso 2s infinite}
+@keyframes pulso{50%{box-shadow:0 0 0 6px rgba(18,163,107,.3)}}
+h1{font-family:var(--titulo);font-weight:800;font-size:clamp(2.2rem,8vw,3.8rem);line-height:1.02;letter-spacing:-.02em}
+.lead{color:#AFC0E6;margin-top:14px;max-width:34ch;font-size:1.05rem}
+
+/* mini linha do dia decorativa */
+.mini{margin-top:28px;display:grid;gap:10px;max-width:380px}
+.mini div{display:flex;height:16px;border-radius:8px;overflow:hidden;background:#1E2E52}
+.mini i{display:block;height:100%}
+.on{background:var(--online)}.pa{background:var(--pausa)}.of{background:var(--offline)}
+.mini small{color:#8FA3CE;font-size:.8rem}
+
+/* cartão de entrada */
+.cartao{background:#fff;color:var(--tinta);border-radius:20px;padding:28px 24px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.cartao h2{font-family:var(--titulo);font-size:1.5rem;margin-bottom:4px}
+.cartao p{color:var(--suave);font-size:.92rem;margin-bottom:20px}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px}
+input{width:100%;border:2px solid var(--trilho);border-radius:12px;padding:12px 14px;font:400 1rem var(--texto);margin-bottom:16px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+button{width:100%;border:0;background:var(--azul);color:#fff;font:600 1rem var(--texto);padding:14px;border-radius:12px;cursor:pointer}
+.erro{color:#8E2233;font-size:.88rem;min-height:1.3em;margin:-6px 0 10px}
+.aviso{font-size:.8rem;color:var(--suave);margin:14px 0 0}
+
+@media (min-width:820px){
+  .pagina{grid-template-columns:1.2fr 1fr;align-items:center;min-height:100vh;gap:56px}
+  .pagina>header{grid-column:1/-1;align-self:start}
+}
+@media (prefers-reduced-motion:reduce){.logo i{animation:none}}
+</style>
+</head>
+<body>
+<div class="pagina">
+  <header class="logo">liv<span>Go</span><i aria-hidden="true"></i></header>
+
+  <section>
+    <h1>Sua equipe à vista, em tempo real.</h1>
+    <p class="lead">O livGo mostra quem está online, em pausa ou offline e como foi o dia de cada pessoa.</p>
+    <div class="mini" aria-hidden="true">
+      <div><i class="on" style="width:40%"></i><i class="pa" style="width:10%"></i><i class="on" style="width:50%"></i></div>
+      <div><i class="of" style="width:15%"></i><i class="on" style="width:85%"></i></div>
+      <small>Um resumo do dia de cada pessoa, em uma barra só.</small>
+    </div>
+  </section>
+
+  <section class="cartao">
+    <h2>Entrar no painel</h2>
+    <p>Use o e-mail da sua empresa.</p>
+    <form id="form" novalidate>
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="email" placeholder="voce@empresa.com">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password">
+      <div class="erro" id="erro" role="alert"></div>
+      <button type="submit">Entrar</button>
+    </form>
+    <p class="aviso">Versão de demonstração: qualquer e-mail e senha preenchidos entram.</p>
+  </section>
+</div>
+
+<script>
+document.getElementById("form").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const erro = document.getElementById("erro");
+  if (!email.includes("@")) { erro.textContent = "Digite um e-mail válido, como voce@empresa.com."; return; }
+  if (senha.length < 1) { erro.textContent = "Digite sua senha."; return; }
+  window.location.href = "painel.html";
+});
+</script>
+</body>
+</html>
