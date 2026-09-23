@@ -3,25 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site Profissional</title>
+    <title>Painel de Monitoramento de Funcionários</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f9;
+            background-color: #f4f6f9;
             color: #333;
-            padding: 50px;
+            padding: 20px;
         }
-        h1 {
-            color: #0056b3;
+        header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        p {
-            font-size: 18px;
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .card h3 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        .card p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        th {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        .badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .online { background-color: #d1e7dd; color: #0f5132; }
+        .pause { background-color: #fff3cd; color: #664d03; }
+        .offline { background-color: #f8d7da; color: #842029; }
     </style>
 </head>
 <body>
-    <h1>Seja bem-vindo ao meu site!</h1>
-    <p>Meu site já está no ar com sucesso pelo GitHub Pages.</p>
+
+    <header>
+        <h1>Painel de Monitoramento da Equipe</h1>
+        <p>Acompanhamento de status e produtividade em tempo real</p>
+    </header>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total de Funcionários</h3>
+            <p>4</p>
+        </div>
+        <div class="card">
+            <h3>Online Agora</h3>
+            <p style="color: #198754;">2</p>
+        </div>
+        <div class="card">
+            <h3>Em Pausa</h3>
+            <p style="color: #ffc107;">1</p>
+        </div>
+        <div class="card">
+            <h3>Offline</h3>
+            <p style="color: #dc3545;">1</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Funcionário</th>
+                <th>Cargo / Setor</th>
+                <th>Status</th>
+                <th>Última Atividade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Ana Silva</strong></td>
+                <td>Consultora de Vendas</td>
+                <td><span class="badge online">Online</span></td>
+                <td>Há 2 min (Atendimento)</td>
+            </tr>
+            <tr>
+                <td><strong>Carlos Eduardo</strong></td>
+                <td>Atendimento ao Cliente</td>
+                <td><span class="badge pause">Em Pausa</span></td>
+                <td>Há 15 min (Almoço)</td>
+            </tr>
+            <tr>
+                <td><strong>Mariana Costa</strong></td>
+                <td>Analista de Contratos</td>
+                <td><span class="badge online">Online</span></td>
+                <td>Agora mesmo</td>
+            </tr>
+            <tr>
+                <td><strong>Roberto Lima</strong></td>
+                <td>Suporte Técnico</td>
+                <td><span class="badge offline">Offline</span></td>
+                <td>Há 2 horas</td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
